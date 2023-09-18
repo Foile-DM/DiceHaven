@@ -32,24 +32,30 @@ class BookingTime(models.Model):
     end_time = models.TimeField('Конец')
     is_available = models.BooleanField('Бронь', default=True)
 
+    def __str__(self):
+        return f"{self.date}, {self.start_time}, {self.game_master}, {self.is_available}"
+
     @classmethod
     def generate_bookings(cls):
         start_date = date.today()
         end_date = start_date + timedelta(days=21)
 
-        # Генерируем записи на пятницу, субботу и воскресенье
+        game_masters = GameMaster.objects.all()
+
         current_date = start_date
         while current_date <= end_date:
-            if current_date.weekday() in [4, 5, 6]:  # Проверяем, является ли день пятницей, субботой или воскресеньем
-                # Проверяем наличие записей для каждого временного интервала
-                start_time = datetime.combine(current_date, time(hour=9))  # Начало работы
-                end_time = datetime.combine(current_date, time(hour=18))  # Конец работы
+            if current_date.weekday() in [4, 5, 6]:
+                for game_master in game_masters:
+                    start_time = datetime.combine(current_date, time(hour=11))  # Начало работы
+                    end_time = datetime.combine(current_date, time(hour=23))  # Конец работы
 
-                # Генерируем записи с интервалом в 1 час, если записей нет
-                while start_time < end_time:
-                    if not cls.objects.filter(date=current_date, start_time=start_time.time()).exists():
-                        cls.objects.create(date=current_date, start_time=start_time.time(),
-                                           end_time=(start_time + timedelta(hours=1)).time())
-                    start_time += timedelta(hours=1)
+                    while start_time < end_time:
+                        if not cls.objects.filter(date=current_date, start_time=start_time.time(),
+                                                  game_master=game_master).exists():
+                            cls.objects.create(date=current_date, start_time=start_time.time(),
+                                               end_time=(start_time + timedelta(hours=3)).time(),
+                                               game_master=game_master)
+                        start_time += timedelta(hours=3)
 
             current_date += timedelta(days=1)
+
