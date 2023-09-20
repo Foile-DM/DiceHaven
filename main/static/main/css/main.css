@@ -66,3 +66,12 @@ form{
     width: 500px;
     margin-top: 50px;
 }
+
+messages{
+    text-align: center;
+    color: red;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-weight: bold;
+    font-size: 30px;
+}

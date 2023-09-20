@@ -11,6 +11,7 @@
 {#    <link rel="stylesheet" href="{% static 'https://kit.fontawesome.com/5fa25a8d38.js' %}">#}
 </head>
 <body>
+
     <aside>
         <img src="{% static 'main/img/alldice-red.png' %}"> <br>
         <h3>Навигация</h3>
@@ -21,6 +22,18 @@
             <a href="{% url 'contact' %}"><li>Контакты</li></a>
         </ul>
     </aside>
+
+    <messages>
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </messages>
+
+
     <main>
         {% block body %}
         {% endblock %}

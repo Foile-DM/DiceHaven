@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import BookingTimeForm
+from .models import Game, BookingTime
 from django.contrib import messages
 
 
@@ -12,6 +13,7 @@ def about(request):
 
 
 def reservation(request):
+
     form = BookingTimeForm
     data = {
         'form': form
@@ -24,10 +26,10 @@ def reservation(request):
         date = request.POST.get('date')
         time = request.POST.get('time')
         if not user_phone:
-            messages.success(request, "Напиши телефон")
+            messages.success(request, "Не введен телефон")
             return redirect('reservation')
         if not user_name:
-            messages.success(request, "Напиши имя")
+            messages.success(request, "Не введено имя")
             return redirect('reservation')
         if not game_system:
             messages.success(request, "Выбери игровую систему")
@@ -45,7 +47,28 @@ def reservation(request):
 
 
 def reservation_submit(request):
-    return render(request, 'main/reservation_submit.html')
+
+    user_phone = request.session.get('user_phone')
+    user_name = request.session.get('user_name')
+    game_system_id = request.session.get('game_system')
+    game_system = Game.objects.get(id=game_system_id)
+    date = request.session.get('date')
+    time = request.session.get('time')
+
+    if BookingTime.objects.filter(date=date, time=time).count() < 1:
+        BookingTime.objects.get_or_create(
+            user_phone=user_phone,
+            user_name=user_name,
+            game_system=game_system,
+            date=date,
+            time=time
+        )
+        messages.success(request, "Запись сохранена!")
+        return redirect('home')
+
+    else:
+        messages.success(request, "Это время уже занято")
+        return redirect('reservation')
 
 
 def contact(request):
