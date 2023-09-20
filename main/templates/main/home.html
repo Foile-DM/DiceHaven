@@ -1,31 +1,29 @@
 {% extends 'main/layout.html' %}
 
 {% block title %}
+    {% load static %}
     <title>Главная страрница</title>
 {% endblock %}
 
 {% block body %}
     <div class="features">
+
     <h1>DiceHaven</h1>
-  <p>Добро пожаловать на DiceHaven - сайт, где вы можете бронировать настольные ролевые игры с мастером! У нас вы найдете широкий выбор игр, захватывающие приключения и незабываемые встречи.</p>
-  <a href="{% url 'reservation' %}" style="display: block; text-align: center; margin-top: 20px;"><button class="btn btn-warning">Забронировать игру</button></a><br>
-  <h2>Наши игровые мастера</h2>
+    <p>Добро пожаловать на DiceHaven - сайт, где вы можете бронировать настольные ролевые игры с мастером! У нас вы найдете широкий выбор игр, захватывающие приключения и незабываемые встречи.</p>
+    <a href="{% url 'reservation' %}" style="display: block; text-align: center; margin-top: 20px;"><button class="btn btn-warning">Забронировать игру</button></a><br>
 
-  <ul>
-    <li>
-      <h3>Имя Мастера 1</h3>
-      <p>Игры, которые ведет: Игра 1, Игра 2, Игра 3</p>
-    </li>
-    <li>
-      <h3>Имя Мастера 2</h3>
-      <p>Игры, которые ведет: Игра 4, Игра 5, Игра 6</p>
-    </li>
-    <li>
-      <h3>Имя Мастера 3</h3>
-      <p>Игры, которые ведет: Игра 7, Игра 8, Игра 9</p>
-    </li>
-  </ul>
+        <h2>Наши игровые мастера</h2>
 
+    <div class="master-list">
+      {% for master in masters %}
+        <div class="master">
+          <img src="{{ master.photo.url }}" alt="My image" class="image">
+          <h2>DM: {{ master.first_name }}</h2>
+          <p>TG: {{ master.tg_username }}</p>
+        </div>
+      {% endfor %}
+    </div>
 
     </div>
+
 {% endblock %}

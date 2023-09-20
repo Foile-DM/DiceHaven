@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from .forms import BookingTimeForm
-from .models import Game, BookingTime
+from .models import Game, BookingTime, GameMaster
 from django.contrib import messages
 
 
 def home(request):
-    return render(request, "main/home.html")
+    masters = GameMaster.objects.all()
+    data = {
+        'masters': masters
+    }
+    return render(request, "main/home.html", data)
 
 
 def about(request):

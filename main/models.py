@@ -7,7 +7,7 @@ class GameMaster(models.Model):
     last_name = models.CharField('Фамилия', max_length=255)
     tg_username = models.CharField('Телеграм', max_length=255)
     phone_number = models.CharField('Телефон', max_length=255)
-    photo = models.ImageField('Фото', upload_to='static/img/', blank=True, null=True)
+    photo = models.ImageField('Фото', upload_to='static/main/img/DM', blank=True, null=True)
 
     def __str__(self):
         return f"{self.first_name}"
