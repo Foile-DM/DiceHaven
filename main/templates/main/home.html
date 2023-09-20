@@ -8,7 +8,7 @@
     <div class="features">
     <h1>DiceHaven</h1>
   <p>Добро пожаловать на DiceHaven - сайт, где вы можете бронировать настольные ролевые игры с мастером! У нас вы найдете широкий выбор игр, захватывающие приключения и незабываемые встречи.</p>
-  <a href="/reservation" style="display: block; text-align: center; margin-top: 20px;"><button>Забронировать игру сейчас</button></a>
+  <a href="{% url 'reservation' %}" style="display: block; text-align: center; margin-top: 20px;"><button class="btn btn-warning">Забронировать игру</button></a><br>
   <h2>Наши игровые мастера</h2>
 
   <ul>
@@ -26,6 +26,6 @@
     </li>
   </ul>
 
-    <button class="btn btn-warning">Забронировать игру</button>
+
     </div>
 {% endblock %}

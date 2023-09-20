@@ -61,3 +61,8 @@ main .features p{
     margin: 20px auto;
 }
 
+form{
+    margin-left: 30%;
+    width: 500px;
+    margin-top: 50px;
+}
